@@ -7,7 +7,7 @@ pull:
   - prefect.deployments.steps.git_clone:
       id: clone
       repository: https://github.com/Aison0577/mlops_data_ml_pipeline.git
-      branch: main
+      branch: master
   - prefect.deployments.steps.set_working_directory:
       directory: "{{ clone.directory }}/src"
 
