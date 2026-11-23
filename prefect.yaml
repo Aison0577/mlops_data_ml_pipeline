@@ -1,0 +1,20 @@
+# How Prefect Cloud gets and runs this project's code.
+name: my-pipeline
+
+# Before every run, Prefect clones the repository and moves into src/,
+# so that `import weather_data_ml_pipeline` works.
+pull:
+  - prefect.deployments.steps.git_clone:
+      id: clone
+      repository: https://github.com/Aison0577/mlops_data_ml_pipeline.git
+      branch: main
+  - prefect.deployments.steps.set_working_directory:
+      directory: "{{ clone.directory }}/src"
+
+deployments:
+  - name: hello
+    entrypoint: weather_data_ml_pipeline/hello.py:hello_pipeline
+    parameters:
+      name: Prefect Cloud
+    work_pool:
+      name: my-managed-pool
